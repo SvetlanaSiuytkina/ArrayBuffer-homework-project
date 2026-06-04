@@ -1,16 +1,36 @@
 import ArrayBufferConverter from '../ArrayBufferConverter';
+import { getBuffer } from '../getBuffer';
 
-function getBuffer() {
-  const data = '{"data":{"user":{"id":1,"name":"Hitman","level":10}}}';
-  
-  return (input => {
-    const buffer = new ArrayBuffer(data.length * 2);
-    const bufferView = new Uint16Array(buffer);
+let converter;
 
-    for (let i = 0; i < input.length; i++) {
-      bufferView[i] = input.charCodeAt(i);
-    }
+beforeEach(() => {
+  converter = new ArrayBufferConverter();
+});
 
-    return buffer;
-  })(data);
-}
+test('loading ArrayBuffer using the load method', () => {
+  const buffer = getBuffer();
+  converter.load(buffer);
+  expect(converter.buffer).toBe(buffer);
+});
+
+test('the toString method should throw an error if the buffer is not loaded', () => {
+  const callToString = () => converter.toString();
+  expect(callToString).toThrow('Буфер не загружен');
+});
+
+test('converting an ArrayBuffer to a string', () => {
+  const expectedString = '{"data":{"user":{"id":1,"name":"Hitman","level":10}}}';
+  const buffer = getBuffer();
+
+  converter.load(buffer);
+  const result = converter.toString();
+
+  expect(result).toBe(expectedString);
+});
+
+test('', () => {
+  expect().toBe();
+});
+
+
+
