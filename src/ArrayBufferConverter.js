@@ -18,5 +18,7 @@ export default class ArrayBufferConverter {
     for (let i = 0; i < bufferView.length; i++) {
       chars.push(String.fromCharCode(bufferView[i]));   //
     }
+
+    return chars.join('');
   }
 }
